@@ -1,0 +1,1172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Catering Order Form - Tapri Chai</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+
+  <style>
+    /* Tapri Chai Inspired Color Palette - Updated with Green and richer tones */
+    :root {
+      --primary-chai-gold: #C89F3C; /* Richer gold */
+      --secondary-chai-gold: #E0B85C; /* Brighter gold */
+      --tertiary-chai-cream: #F5E0B3; /* Warmer cream */
+      --tapri-green: #4CAF50; /* Standard, pleasing green */
+      --tapri-green-dark: #388E3C; /* Darker shade for hover */
+      --background-light: #FFF8E1; /* Very light, warm yellow/cream */
+      --text-dark: #333333; /* Softer dark grey */
+      --text-medium: #555555; /* Medium grey */
+      --border-color: #E6D3B4; /* Soft border color */
+      --error-red: #dc3545; /* Standard error red */
+      --accent-orange: #FF7043; /* New accent color for highlights */
+    }
+
+    /* General body and container styling */
+    body {
+      font-family: 'Roboto', sans-serif;
+      padding: 40px 20px;
+      background-color: var(--background-light);
+      display: flex;
+      justify-content: center;
+      margin: 0;
+      min-height: 100vh;
+      box-sizing: border-box;
+      color: var(--text-dark);
+      /* Removed overflow-x: hidden; as marigolds are gone */
+    }
+
+    .container {
+      max-width: 900px;
+      width: 100%;
+      background-color: #fff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15); /* Stronger shadow */
+      box-sizing: border-box;
+      border: 1px solid var(--border-color);
+      position: relative; /* For z-index to work correctly with flowers */
+      z-index: 10; /* Ensure content is above flowers */
+    }
+
+    /* Logo styling */
+    .logo-container {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .logo-container img {
+      max-width: 200px; /* Adjust as needed */
+      height: auto;
+    }
+
+    /* Heading styles */
+    h2 {
+      color: var(--tapri-green-dark); /* Darker green for prominence */
+      font-size: 2.5em;
+      margin-bottom: 30px;
+      text-align: center;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.1); /* Subtle text shadow */
+    }
+
+    h3 {
+      color: var(--primary-chai-gold); /* Richer gold for subheadings */
+      font-size: 1.8em;
+      margin-bottom: 20px;
+      border-bottom: 2px solid var(--secondary-chai-gold); /* Brighter gold underline */
+      padding-bottom: 8px;
+      font-weight: 500;
+    }
+
+    /* Section styling */
+    .section {
+      margin-bottom: 40px;
+      padding: 25px;
+      background: linear-gradient(145deg, #fdfaf0, #fffcf5); /* Subtle gradient background */
+      border: 1px solid var(--secondary-chai-gold); /* Stronger border */
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08); /* More pronounced shadow */
+    }
+
+    /* Guest count input */
+    #guestCount {
+      padding: 10px 12px;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      font-size: 1.1em;
+      width: 120px;
+      margin-left: 15px;
+      text-align: center;
+      background-color: #fff;
+      color: var(--text-dark);
+    }
+
+    /* Item grid layout */
+    .item-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 20px;
+    }
+
+    /* Individual item box styling */
+    .item-box {
+      border: 1px solid var(--tertiary-chai-cream); /* Softer border initially */
+      padding: 18px;
+      border-radius: 10px;
+      background: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: all 0.2s ease-in-out;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.03);
+    }
+
+    .item-box:hover {
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15); /* Stronger hover shadow */
+      border-color: var(--primary-chai-gold); /* Gold border on hover */
+      transform: translateY(-3px);
+    }
+
+    .item-box.selected {
+      background-color: #fff9e6; /* Lighter cream background when selected */
+      border-color: var(--tapri-green); /* Green border when selected */
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+    }
+
+    .item-box label {
+      font-weight: 500;
+      flex: 1;
+      margin-left: 12px;
+      color: var(--text-dark);
+      cursor: pointer;
+      font-size: 1.05em;
+    }
+
+    .item-box input[type="checkbox"] {
+      transform: scale(1.4);
+      margin-right: 18px;
+      accent-color: var(--tapri-green-dark); /* Darker green accent */
+      min-width: 20px;
+      min-height: 20px;
+    }
+
+    .item-box input[type="number"] {
+      width: 75px;
+      padding: 9px 12px;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      font-size: 1.05em;
+      text-align: center;
+      background-color: #fff;
+      color: var(--text-dark);
+    }
+
+    /* Button styling */
+    button {
+      background: linear-gradient(135deg, var(--tapri-green), var(--tapri-green-dark)); /* Gradient for buttons */
+      color: white;
+      padding: 14px 30px;
+      border: 1px solid var(--tapri-green-dark); /* Solid border matching darker green */
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1.15em;
+      margin-right: 20px;
+      transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3); /* Stronger button shadow */
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    button:hover {
+      background: linear-gradient(135deg, var(--tapri-green-dark), #2e6b30); /* Darker gradient on hover */
+      transform: translateY(-4px); /* More pronounced lift on hover */
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35); /* Even stronger shadow on hover */
+    }
+
+    button:active {
+      transform: translateY(0);
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+    }
+
+    /* Result display styling */
+    .result {
+      background: #fffdf5; /* Lighter, warmer background */
+      padding: 30px;
+      margin-top: 40px;
+      border-radius: 10px;
+      border: 1px solid var(--secondary-chai-gold); /* Gold border */
+      font-size: 1.15em;
+      line-height: 1.7;
+      box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.08); /* Subtle inner shadow */
+      color: var(--text-medium);
+    }
+
+    .result strong {
+      color: var(--tapri-green-dark); /* Darker green for emphasis */
+      font-size: 1.3em;
+      font-weight: 700;
+    }
+
+    .result ul {
+      list-style: none;
+      padding: 0;
+      margin-top: 15px;
+    }
+
+    .result ul li {
+      margin-bottom: 8px;
+      padding-left: 20px;
+      position: relative;
+    }
+
+    .result ul li::before {
+      content: '•';
+      color: var(--tapri-green); /* Green bullet points */
+      position: absolute;
+      left: 0;
+      font-size: 1.4em;
+      line-height: 1;
+      top: 3px;
+    }
+
+    /* Error message styling */
+    .error-message {
+      color: var(--error-red);
+      font-weight: 600;
+      margin-bottom: 10px;
+      text-align: center;
+      padding: 10px;
+      border: 1px dashed var(--error-red);
+      background-color: rgba(220, 53, 69, 0.05);
+      border-radius: 5px;
+    }
+
+    /* Modal Styles */
+    .modal {
+      display: none; /* Hidden by default - THIS IS THE CRITICAL FIX */
+      position: fixed; /* Stay in place */
+      z-index: 1000; /* Sit on top */
+      left: 0;
+      top: 0;
+      width: 100%; /* Full width */
+      height: 100%; /* Full height */
+      overflow: auto; /* Enable scroll if needed */
+      background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+      align-items: center; /* Center vertically */
+      justify-content: center; /* Center horizontally */
+    }
+
+    .modal-content {
+      background-color: #fefefe;
+      padding: 30px;
+      border: 1px solid #888;
+      width: 90%;
+      max-width: 600px;
+      border-radius: 10px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.4); /* Stronger modal shadow */
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .modal-content h3 {
+      color: var(--tapri-green-dark); /* Darker green for modal heading */
+      text-align: center;
+      margin-bottom: 25px;
+      font-size: 2em;
+      border-bottom: 2px solid var(--primary-chai-gold); /* Gold underline for modal heading */
+      padding-bottom: 10px;
+    }
+
+    .modal-content label {
+      font-weight: 500;
+      color: var(--text-dark);
+      margin-bottom: 5px;
+      font-size: 1.1em;
+    }
+
+    .modal-content input[type="text"],
+    .modal-content input[type="tel"],
+    .modal-content input[type="email"],
+    .modal-content input[type="date"],
+    .modal-content input[type="time"] {
+      width: calc(100% - 22px);
+      padding: 10px;
+      margin-bottom: 5px; /* Reduced margin */
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      font-size: 1em;
+      box-sizing: border-box;
+    }
+
+    .delivery-options {
+      display: flex;
+      gap: 20px;
+      margin-top: 10px;
+      margin-bottom: 10px;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 0;
+      background-color: #f9f9f9;
+      border-radius: 5px;
+    }
+
+    .delivery-options input[type="radio"] {
+      transform: scale(1.2);
+      accent-color: var(--tapri-green);
+    }
+
+    .delivery-options label {
+      font-weight: normal;
+      font-size: 1em;
+      margin-left: 5px;
+      margin-right: 10px;
+      color: var(--text-dark);
+      cursor: pointer;
+    }
+    
+    .delivery-options input[type="radio"]:disabled + label {
+      color: #999;
+      cursor: not-allowed;
+    }
+
+    .modal-buttons {
+      display: flex;
+      justify-content: flex-end;
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    .modal-buttons button {
+      padding: 12px 25px;
+      font-size: 1em;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    .modal-buttons .submit-button {
+      background: linear-gradient(135deg, var(--tapri-green), var(--tapri-green-dark)); /* Gradient for submit button */
+      color: white;
+      border: none;
+    }
+
+    .modal-buttons .submit-button:hover {
+      background: linear-gradient(135deg, var(--tapri-green-dark), #2e6b30); /* Darker gradient on hover */
+    }
+
+    .modal-buttons .cancel-button {
+      background-color: #f0f0f0;
+      color: var(--text-dark);
+      border: 1px solid #ccc;
+    }
+
+    .modal-buttons .cancel-button:hover {
+      background-color: #e0e0e0;
+    }
+
+    .warning-message {
+      color: var(--error-red);
+      font-weight: 500;
+      margin-top: 5px; /* Adjust spacing */
+      margin-bottom: 15px; /* Adjust spacing */
+      text-align: center;
+      font-size: 0.95em;
+    }
+
+    #deliveryAddressGroup {
+      display: none; /* Hidden by default */
+    }
+
+    /* Mobile responsiveness adjustments */
+    @media (max-width: 768px) {
+      body {
+        padding: 20px 10px;
+      }
+
+      .container {
+        padding: 20px;
+      }
+
+      h2 {
+        font-size: 2em;
+        margin-bottom: 20px;
+      }
+
+      h3 {
+        font-size: 1.5em;
+        margin-bottom: 15px;
+      }
+
+      #guestCount {
+        width: 100px;
+        font-size: 1em;
+        margin-left: 10px;
+      }
+
+      .item-grid {
+        grid-template-columns: 1fr; /* Stack items on small screens */
+        gap: 15px;
+      }
+
+      .item-box {
+        padding: 15px;
+      }
+
+      .item-box label {
+        font-size: 1em;
+      }
+
+      .item-box input[type="checkbox"] {
+        transform: scale(1.2);
+        margin-right: 12px;
+      }
+
+      .item-box input[type="number"] {
+        width: 60px;
+        padding: 8px;
+        font-size: 1em;
+      }
+
+      button {
+        padding: 12px 20px;
+        font-size: 1em;
+        margin-right: 10px;
+        margin-bottom: 10px; /* Add space between stacked buttons */
+        width: calc(50% - 5px); /* Two buttons per row */
+        box-sizing: border-box;
+      }
+      
+      .modal-content {
+        padding: 20px;
+        width: 95%;
+      }
+
+      .modal-buttons {
+        flex-direction: column; /* Stack modal buttons */
+        gap: 10px;
+      }
+
+      .modal-buttons button {
+        width: 100%;
+        margin-right: 0;
+      }
+    }
+
+    @media (max-width: 480px) {
+      h2 {
+        font-size: 1.8em;
+      }
+      h3 {
+        font-size: 1.3em;
+      }
+      button {
+        width: 100%; /* Single button per row */
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="logo-container">
+      <img id="tapriLogo" src="https://i.ibb.co/k2kLHBq2/TAPRI-CHAI-02-1.png" alt="Tapri Chai Logo">
+    </div>
+    <h2>Catering Order Customizer</h2>
+
+    <div class="section">
+      <label>Total Number of Guests (Minimum 15):</label>
+      <input type="number" id="guestCount" min="15" value="15" onchange="enforceMinGuests(this)">
+      <p>Base price: $15.99 per person (includes: 1 Appetizer, 2 Curries (1 Classic, 1 Signature), Rice, Raita, Papad, Desert)</p>
+    </div>
+
+    <div class="section">
+      <h3>Appetizers ($2.75 per person)</h3>
+      <div class="item-grid" id="appetizerItems"></div>
+    </div>
+
+    <div class="section">
+      <h3>Classic Curries ($3.00 per person)</h3>
+      <div class="item-grid" id="classicCurryItems"></div>
+    </div>
+
+    <div class="section">
+      <h3>Signature Mains ($3.00 per person)</h3>
+      <div class="item-grid" id="signatureMainItems"></div>
+    </div>
+
+    <div class="section">
+      <h3>Breads ($2.50 per person)</h3>
+      <div class="item-grid" id="breadItems"></div>
+    </div>
+
+    <div class="section">
+      <h3>Rice ($1.50 per person)</h3>
+      <div class="item-grid" id="riceItems"></div>
+    </div>
+
+    <div class="section">
+      <h3>Raita ($0.50 per person)</h3>
+      <div class="item-grid" id="raitaItems"></div>
+    </div>
+
+    <div class="section">
+      <h3>Papad ($0.24 per person)</h3>
+      <div class="item-grid" id="papadItems"></div>
+    </div>
+
+    <div class="section">
+      <h3>Desserts ($2.50 per person)</h3>
+      <div class="item-grid" id="dessertItems"></div>
+    </div>
+
+    <button onclick="openEventDetailsModal()">Download PDF Summary</button>
+    <button onclick="whatsappPdfSummary()">WhatsApp PDF Summary</button>
+
+    <div class="result" id="result"></div>
+  </div>
+
+  <div id="eventDetailsModal" class="modal">
+    <div class="modal-content">
+      <h3>Enter Event Details</h3>
+      <label for="modalCustomerName">Your Full Name:</label>
+      <input type="text" id="modalCustomerName" required>
+
+      <label for="modalCustomerPhone">Phone Number:</label>
+      <input type="tel" id="modalCustomerPhone" required>
+
+      <label for="modalCustomerEmail">Email Address:</label>
+      <input type="email" id="modalCustomerEmail" required>
+
+      <label for="modalOccasion">Occasion:</label>
+      <input type="text" id="modalOccasion" required>
+      <button onclick="generateThemeIdeas()" style="margin-top: 10px;">✨ Generate Theme Ideas</button>
+      <textarea id="themeIdeasOutput" rows="4" placeholder="Generated theme ideas will appear here..." style="width: calc(100% - 22px); padding: 10px; margin-top: 10px; border: 1px solid var(--border-color); border-radius: 6px; font-size: 1em; box-sizing: border-box;" readonly></textarea>
+      
+      <label for="modalEventDate">Event Date:</label>
+      <input type="date" id="modalEventDate" required>
+
+      <label for="modalEventTime">Event Time:</label>
+      <input type="time" id="modalEventTime" required>
+
+      <label>Delivery Option:</label>
+      <div class="delivery-options">
+        <input type="radio" id="deliveryOptionDelivery" name="deliveryOption" value="Delivery" checked>
+        <label for="deliveryOptionDelivery">Delivery</label>
+        <input type="radio" id="deliveryOptionPickup" name="deliveryOption" value="Pick-up">
+        <label for="deliveryOptionPickup">Pick-up</label>
+      </div>
+      <p id="deliveryWarning" class="warning-message" style="display:none;">Delivery available for orders over $300.</p>
+
+      <div id="deliveryAddressGroup">
+        <label for="modalDeliveryAddress">Delivery Address:</label>
+        <input type="text" id="modalDeliveryAddress" placeholder="Street, City, Postal Code" required>
+      </div>
+
+      <div class="modal-buttons">
+        <button id="modalSubmit" class="submit-button">Submit</button>
+        <button id="modalCancel" class="cancel-button">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const appetizers = [
+      "Veg Burger Sliders",
+      "Vada Pav Sliders",
+      "Dabeli",
+      "Veg Sandwich",
+      "Dahi Bhalla Papdi",
+      "Samosa",
+      "Pani Puri"
+    ];
+
+    const classicCurries = [
+      "Dal Makhni",
+      "Dal Tadka",
+      "Rajma Masala",
+      "Kadhi Pakora",
+      "Chana Masala"
+    ];
+
+    const signatureMains = [
+      "Paneer Lababdar",
+      "Aloo Gobhi",
+      "Aloo Gravy",
+      "Shahi Paneer",
+      "Malai Kofta"
+    ];
+
+    const breads = ["Puris (2)", "Tawa Roti (2)"];
+
+    const riceItems = [
+      "Jeera Rice",
+      "Plain Rice"
+    ];
+
+    const raitaItems = [
+      "Boondi Raita",
+      "Veg Raita",
+      "Salted Yogurt"
+    ];
+
+    const papadItems = [
+      "Fried Papad"
+    ];
+
+    const dessertItems = [
+      "Gulab Jamun (2)",
+      "Ras Malai (2)"
+    ];
+
+    let selectedItems = []; // Stores objects with name, type, quantity, unitPrice, lineTotal
+    let currentTotalCost = 0; // To store the total for delivery check
+
+    // --- Image URLs for PDF and HTML ---
+    const bannerImgUrl = 'https://i.ibb.co/L5Qy0f7/tapr-cover.png'; 
+    const logoImgUrl = 'https://i.ibb.co/k2kLHBq2/TAPRI-CHAI-02-1.png'; // Use the same logo URL as in the HTML <img> tag
+    // --- End Image URLs ---
+
+    function renderItems(containerId, items) {
+      const container = document.getElementById(containerId);
+      if (!container) {
+        console.error(`Error: HTML element with ID "${containerId}" not found. Cannot render items.`);
+        return;
+      }
+      console.log(`Rendering ${containerId} with items:`, items); // Added console log
+      container.innerHTML = '';
+      items.forEach(item => {
+        const div = document.createElement('div');
+        div.className = 'item-box';
+        div.innerHTML = `
+          <input type="checkbox" onchange="toggleQuantity(this)">
+          <label>${item}</label>
+          <input type="number" value="0" min="0" data-name="${item}" oninput="enforceMinItemQuantity(this)" disabled>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    function toggleQuantity(checkbox) {
+      const itemBox = checkbox.parentElement;
+      const quantityInput = itemBox.querySelector('input[type="number"]');
+      const guestCount = parseInt(document.getElementById('guestCount').value);
+
+      quantityInput.disabled = !checkbox.checked;
+      itemBox.classList.toggle('selected', checkbox.checked);
+
+      if (checkbox.checked) {
+        let currentQty = parseInt(quantityInput.value);
+        if (isNaN(currentQty) || currentQty < guestCount) {
+          quantityInput.value = guestCount;
+        }
+      } else {
+        quantityInput.value = 0;
+      }
+      calculateTotal(); // Recalculate total after quantity change
+    }
+
+    function enforceMinItemQuantity(input) {
+      const guestCount = parseInt(document.getElementById('guestCount').value);
+      let currentQty = parseInt(input.value);
+
+      if (isNaN(currentQty) || currentQty < guestCount) {
+        input.value = guestCount;
+      }
+      calculateTotal(); // Recalculate total after quantity change
+    }
+
+    // Helper to process categories and add items to selectedItems array
+    function processCategoryForCalculation(containerId, perPersonCost, type) {
+        const inputs = document.querySelectorAll(`#${containerId} input[type='number']`);
+        let selectedCount = 0;
+        
+        inputs.forEach(input => {
+            if (!input.disabled && parseInt(input.value) > 0) {
+                selectedCount++;
+                const itemQuantity = parseInt(input.value);
+                const unitPrice = perPersonCost; 
+                const lineTotal = unitPrice * itemQuantity;
+
+                selectedItems.push({
+                    name: input.dataset.name,
+                    type: type,
+                    quantity: itemQuantity,
+                    unitPrice: unitPrice,
+                    lineTotal: lineTotal
+                });
+            }
+        });
+
+        return { count: selectedCount }; // Only return count for validation
+    }
+
+
+    function enforceMinGuests(input) {
+      let value = parseInt(input.value);
+      if (isNaN(value) || value < 15) {
+          value = 15;
+          input.value = 15;
+          alert("Minimum order is for 15 guests. Value has been set to 15.");
+      }
+
+      document.querySelectorAll('.item-box input[type="checkbox"]:checked').forEach(checkbox => {
+          const quantityInput = checkbox.parentElement.querySelector('input[type="number"]');
+          if (parseInt(quantityInput.value) < value) {
+              quantityInput.value = value;
+          }
+      });
+      calculateTotal(); // Recalculate total after guest count change
+    }
+
+    function calculateTotal() {
+      const guests = parseInt(document.getElementById('guestCount').value);
+      selectedItems = []; // Reset selected items for each calculation
+
+      // Process each category, adding selected items to `selectedItems` with their respective costs
+      const appetizersResult = processCategoryForCalculation('appetizerItems', 2.75, 'Appetizer');
+      if (appetizersResult.count < 1) {
+          document.getElementById('result').innerHTML = `<p class="error-message">Please select at least 1 Appetizer.</p>`;
+          currentTotalCost = 0;
+          return;
+      }
+
+      const classicCurriesResult = processCategoryForCalculation('classicCurryItems', 3.00, 'Classic Curry');
+      if (classicCurriesResult.count < 1) {
+          document.getElementById('result').innerHTML = `<p class="error-message">Please select at least 1 Classic Curry.</p>`;
+          currentTotalCost = 0;
+          return;
+      }
+
+      const signatureMainResult = processCategoryForCalculation('signatureMainItems', 3.00, 'Signature Main');
+      if (signatureMainResult.count < 1) {
+          document.getElementById('result').innerHTML = `<p class="error-message">Please select at least 1 Signature Main.</p>`;
+          currentTotalCost = 0;
+          return;
+      }
+
+      const breadsResult = processCategoryForCalculation('breadItems', 2.50, 'Bread');
+      if (breadsResult.count < 1) {
+          document.getElementById('result').innerHTML = `<p class="error-message">Please select at least 1 Bread.</p>`;
+          currentTotalCost = 0;
+          return;
+      }
+
+      processCategoryForCalculation('riceItems', 1.50, 'Rice');
+      processCategoryForCalculation('raitaItems', 0.50, 'Raita');
+      // Updated Papad calculation to use $0.24 per person
+      processCategoryForCalculation('papadItems', 0.24, 'Papad'); 
+      processCategoryForCalculation('dessertItems', 2.50, 'Dessert');
+
+      // Calculate the total from all selected items' line totals
+      currentTotalCost = selectedItems.reduce((sum, item) => sum + item.lineTotal, 0);
+      
+      let itemizedList = "";
+        selectedItems.forEach(item => {
+            itemizedList += `<li>${item.name} (${item.type}) - Qty: ${item.quantity}, Unit Price: $${item.unitPrice.toFixed(2)}, Line Total: $${item.lineTotal.toFixed(2)}</li>`;
+        });
+
+      document.getElementById('result').innerHTML = `
+        <strong>Total Price:</strong> $${currentTotalCost.toFixed(2)}<br>
+        <strong>Per Person (approx):</strong> $${(currentTotalCost / guests).toFixed(2)}<br><br>
+        <strong>Selected Items:</strong><br>
+        <ul>${itemizedList}</ul>
+      `;
+    }
+
+    // Modal elements
+    const eventDetailsModal = document.getElementById('eventDetailsModal');
+    const modalSubmitBtn = document.getElementById('modalSubmit');
+    const modalCancelBtn = document.getElementById('modalCancel');
+
+    const modalCustomerName = document.getElementById('modalCustomerName');
+    const modalCustomerPhone = document.getElementById('modalCustomerPhone');
+    const modalCustomerEmail = document.getElementById('modalCustomerEmail');
+    const modalOccasion = document.getElementById('modalOccasion');
+    const modalEventDate = document.getElementById('modalEventDate');
+    const modalEventTime = document.getElementById('modalEventTime');
+    const deliveryOptionDelivery = document.getElementById('deliveryOptionDelivery');
+    const deliveryOptionPickup = document.getElementById('deliveryOptionPickup');
+    const deliveryWarning = document.getElementById('deliveryWarning');
+    const deliveryAddressGroup = document.getElementById('deliveryAddressGroup');
+    const modalDeliveryAddress = document.getElementById('modalDeliveryAddress');
+    const themeIdeasOutput = document.getElementById('themeIdeasOutput');
+
+
+    function openEventDetailsModal() {
+      // First, ensure the menu selections are valid
+      calculateTotal();
+      const resultDiv = document.getElementById('result');
+      if (resultDiv.querySelector('.error-message')) {
+        alert("Please ensure you meet the minimum item selection requirements before downloading the PDF.");
+        return; // Stop if validation failed
+      }
+      
+      // Check for delivery eligibility
+      if (currentTotalCost < 300) {
+        deliveryOptionDelivery.disabled = true;
+        deliveryOptionDelivery.checked = false; // Uncheck delivery if total is less than $300
+        deliveryOptionPickup.checked = true; // Force pickup
+        deliveryWarning.style.display = 'block';
+        deliveryAddressGroup.style.display = 'none'; // Hide address if pickup is forced
+        modalDeliveryAddress.removeAttribute('required');
+      } else {
+        deliveryOptionDelivery.disabled = false;
+        deliveryWarning.style.display = 'none';
+        deliveryOptionDelivery.checked = true; // Default to delivery if eligible
+        deliveryAddressGroup.style.display = 'block'; // Show address by default for delivery
+        modalDeliveryAddress.setAttribute('required', 'required');
+      }
+
+      eventDetailsModal.style.display = 'flex'; // Show the modal
+    }
+
+    modalCancelBtn.onclick = function() {
+      eventDetailsModal.style.display = 'none'; // Hide the modal
+    }
+
+    // Toggle delivery address visibility
+    deliveryOptionDelivery.addEventListener('change', function() {
+      if (this.checked) {
+        deliveryAddressGroup.style.display = 'block';
+        modalDeliveryAddress.setAttribute('required', 'required');
+      }
+    });
+
+    deliveryOptionPickup.addEventListener('change', function() {
+      if (this.checked) {
+        deliveryAddressGroup.style.display = 'none';
+        modalDeliveryAddress.removeAttribute('required');
+      }
+    });
+
+
+    modalSubmitBtn.onclick = function() {
+      // Collect data from modal inputs
+      const customerName = modalCustomerName.value;
+      const customerPhone = modalCustomerPhone.value;
+      const customerEmail = modalCustomerEmail.value;
+      const occasion = modalOccasion.value;
+      const eventDate = modalEventDate.value;
+      const eventTime = modalEventTime.value;
+      const deliveryOption = document.querySelector('input[name="deliveryOption"]:checked').value;
+      const deliveryAddress = deliveryOption === 'Delivery' ? modalDeliveryAddress.value : '';
+
+      // Basic validation for modal inputs
+      if (!customerName || !customerPhone || !customerEmail || !occasion || !eventDate || !eventTime) {
+        alert("Please fill in all required event details.");
+        return;
+      }
+      if (deliveryOption === 'Delivery' && !deliveryAddress) {
+        alert("Please enter the delivery address.");
+        return;
+      }
+
+      // If all inputs are valid, proceed to generate PDF
+      generatePdfWithDetails({
+        customerName,
+        customerPhone,
+        customerEmail,
+        occasion,
+        eventDate,
+        eventTime,
+        deliveryOption,
+        deliveryAddress
+      });
+
+      eventDetailsModal.style.display = 'none'; // Hide modal after submission
+    }
+
+    // Function to handle WhatsApp sharing
+    function whatsappPdfSummary() {
+        // Ensure latest calculation
+        calculateTotal();
+
+        // Collect necessary details for the WhatsApp message
+        const customerName = modalCustomerName.value || "Customer";
+        const guests = parseInt(document.getElementById('guestCount').value) || 0;
+        const totalCost = currentTotalCost.toFixed(2);
+        const eventDate = modalEventDate.value || "N/A";
+        const eventTime = modalEventTime.value || "N/A";
+
+        let message = `Hello Tapri Chai, I'd like to inquire about a catering order.\n\n`;
+        message += `Customer Name: ${customerName}\n`;
+        if (guests > 0) {
+            message += `Total Guests: ${guests}\n`;
+        }
+        message += `Event Date: ${eventDate}\n`;
+        message += `Event Time: ${eventTime}\n`;
+        message += `Estimated Cost: $${totalCost}\n\n`;
+        
+        message += `Selected Menu Items:\n`;
+        if (selectedItems.length > 0) {
+            selectedItems.forEach(item => {
+                message += `- ${item.name} (${item.type}) - Qty: ${item.quantity}\n`;
+            });
+        } else {
+            message += `No items selected or minimums not met.\n`;
+        }
+
+        message += `\nPlease find the detailed PDF invoice attached (if you have already downloaded it).`;
+
+        // Encode the message for URL
+        const encodedMessage = encodeURIComponent(message);
+
+        // WhatsApp number (replace with Tapri Chai's actual WhatsApp number)
+        const whatsappNumber = "16132901291"; 
+
+        const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
+
+        // Open WhatsApp
+        window.open(whatsappUrl, '_blank');
+
+        // Alert user to manually attach the PDF
+        alert("Please ensure you have downloaded the PDF invoice and then manually attach it to the WhatsApp chat to complete your inquiry.");
+    }
+
+    async function generateThemeIdeas() {
+        const occasion = modalOccasion.value.trim();
+        const themeIdeasOutput = document.getElementById('themeIdeasOutput');
+        
+        if (!occasion) {
+            themeIdeasOutput.value = "Please enter an occasion to generate theme ideas.";
+            return;
+        }
+
+        themeIdeasOutput.value = "Generating ideas... Please wait.";
+
+        try {
+            const prompt = `Generate 3-5 creative and elegant theme ideas or a short descriptive blurb for a catering event for a "${occasion}". Focus on sophisticated and appealing concepts.`;
+            let chatHistory = [];
+            chatHistory.push({ role: "user", parts: [{ text: prompt }] });
+            const payload = { contents: chatHistory };
+            const apiKey = ""; // If you want to use models other than gemini-2.0-flash or imagen-3.0-generate-002, provide an API key here. Otherwise, leave this as-is.
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+            
+            const response = await fetch(apiUrl, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+            
+            const result = await response.json();
+            
+            if (result.candidates && result.candidates.length > 0 &&
+                result.candidates[0].content && result.candidates[0].content.parts &&
+                result.candidates[0].content.parts.length > 0) {
+                const text = result.candidates[0].content.parts[0].text;
+                themeIdeasOutput.value = text;
+            } else {
+                themeIdeasOutput.value = "Could not generate ideas. Please try again.";
+            }
+        } catch (error) {
+            console.error("Error generating theme ideas:", error);
+            themeIdeasOutput.value = "An error occurred while generating ideas. Please try again.";
+        }
+    }
+
+
+    async function generatePdfWithDetails(details) {
+      // Recalculate total just before PDF generation to ensure data is fresh
+      calculateTotal(); 
+
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
+      const guests = parseInt(document.getElementById('guestCount').value);
+
+      let y = 15;
+      const margin = 15;
+      const pageWidth = doc.internal.pageSize.width;
+      
+      // Column positions for the table
+      const col1X = margin; // Item Name
+      const col2X = col1X + 80; // Quantity
+      const col3X = col2X + 35; // Unit Price
+      const col4X = col3X + 35; // Line Total (right aligned to here)
+
+
+      // --- Add the banner image at the top ---
+      if (bannerImgUrl) {
+        try {
+            const img = new Image();
+            img.src = bannerImgUrl;
+            await new Promise(resolve => img.onload = resolve); // Wait for image to load
+            doc.addImage(img, 'PNG', 0, 0, pageWidth, 40); // Adjust height (40) as needed
+            y = 50; // Adjust starting y position after banner
+        } catch (e) {
+            console.error("Error loading banner image for PDF:", e);
+        }
+      }
+      // --- End banner image ---
+
+      // --- Add the logo image ---
+      if (logoImgUrl) {
+        try {
+            const img = new Image();
+            img.src = logoImgUrl;
+            await new Promise(resolve => img.onload = resolve); // Wait for image to load
+            const logoWidth = 50; // Adjust logo width as needed
+            const logoHeight = img.height * (logoWidth / img.width); // Maintain aspect ratio
+            const logoX = (pageWidth - logoWidth) / 2; // Center the logo
+            doc.addImage(img, 'PNG', logoX, y, logoWidth, logoHeight);
+            y += logoHeight + 10; // Move y down after the logo
+        } catch (e) {
+            console.error("Error loading logo image for PDF:", e);
+        }
+      }
+      // --- End logo image ---
+
+      // Invoice Title
+      doc.setFontSize(22);
+      doc.setTextColor(56, 142, 60); // Tapri Green RGB
+      doc.text("Catering Order Invoice", margin, y);
+      y += 10; /* Reduced spacing */
+
+      // Customer and Event Details
+      doc.setFontSize(12);
+      doc.setTextColor(74, 74, 74);
+      doc.text(`Customer: ${details.customerName}`, margin, y);
+      y += 6; /* Reduced spacing */
+      doc.text(`Phone: ${details.customerPhone}`, margin, y);
+      y += 6; /* Reduced spacing */
+      doc.text(`Email: ${details.customerEmail}`, margin, y);
+      y += 6; /* Reduced spacing */
+      doc.text(`Occasion: ${details.occasion}`, margin, y);
+      y += 6; /* Reduced spacing */
+      doc.text(`Event Date: ${details.eventDate}`, margin, y);
+      y += 6; /* Reduced spacing */
+      doc.text(`Event Time: ${details.eventTime}`, margin, y);
+      y += 6; /* Reduced spacing */
+      doc.text(`Total Guests: ${guests}`, margin, y);
+      y += 6; /* Reduced spacing */
+      doc.text(`Delivery Option: ${details.deliveryOption}`, margin, y);
+      y += 6; /* Reduced spacing */
+      if (details.deliveryOption === 'Delivery' && details.deliveryAddress) {
+        doc.text(`Delivery Address: ${details.deliveryAddress}`, margin, y);
+        y += 6; /* Reduced spacing */
+      }
+      y += 10; /* Reduced spacing */
+
+      // Calculate available height for the table
+      const headerHeight = y; // Current y is the end of header
+      const footerHeightEstimate = 60; // Estimate for total, payment info
+      const availableTableHeight = doc.internal.pageSize.height - headerHeight - margin - footerHeightEstimate;
+
+      let tableFontSize = 10; // Initial font size for table content
+      let lineHeight = tableFontSize / doc.internal.scaleFactor * 1.2; // 1.2 for line spacing
+      let requiredTableHeight = selectedItems.length * lineHeight;
+
+      // Adjust font size if table overflows
+      if (requiredTableHeight > availableTableHeight) {
+          tableFontSize = Math.max(7, (availableTableHeight / selectedItems.length) / (1.2 / doc.internal.scaleFactor)); // Minimum 7pt
+          lineHeight = tableFontSize / doc.internal.scaleFactor * 1.2; // Recalculate line height
+      }
+
+      // Itemized Table Headers
+      doc.setFontSize(tableFontSize + 2); // Slightly larger for headers
+      doc.setTextColor(56, 142, 60);
+      doc.text("Menu Item", col1X, y);
+      doc.text("Qty", col2X, y, { align: 'right' }); 
+      doc.text("Unit Price", col3X, y, { align: 'right' }); 
+      doc.text("Line Total", col4X, y, { align: 'right' }); 
+      y += tableFontSize + 3; /* Reduced spacing */
+      doc.line(col1X, y, pageWidth - margin, y); // Underline headers
+      y += 5; /* Reduced spacing */
+
+      // Itemized Table Content
+      doc.setFontSize(tableFontSize);
+      doc.setTextColor(74, 74, 74);
+
+      selectedItems.forEach(item => {
+          // Ensure enough space for the current row
+          if (y + lineHeight > doc.internal.pageSize.height - margin - footerHeightEstimate) {
+              // This scenario should ideally not happen with dynamic font sizing for the whole table,
+              // but it's a safeguard for very complex cases or if the minimum font is too large.
+              doc.addPage();
+              y = margin;
+              doc.setFontSize(tableFontSize + 2);
+              doc.setTextColor(56, 142, 60);
+              doc.text("Menu Item (Continued)", col1X, y);
+              doc.text("Qty", col2X, y, { align: 'right' }); 
+              doc.text("Unit Price", col3X, y, { align: 'right' }); 
+              doc.text("Line Total", col4X, y, { align: 'right' }); 
+              y += tableFontSize + 3; /* Reduced spacing */
+              doc.line(col1X, y, pageWidth - margin, y);
+              y += 5; /* Reduced spacing */
+              doc.setFontSize(tableFontSize);
+              doc.setTextColor(74, 74, 74);
+          }
+
+          doc.text(item.name, col1X, y);
+          doc.text(item.quantity.toString(), col2X, y, { align: 'right' });
+          doc.text(`$${item.unitPrice.toFixed(2)}`, col3X, y, { align: 'right' });
+          doc.text(`$${item.lineTotal.toFixed(2)}`, col4X, y, { align: 'right' });
+          y += lineHeight;
+      });
+
+      y += 8; /* Reduced spacing */
+      doc.line(col1X, y, pageWidth - margin, y); // Line before Grand Total
+      y += 5; /* Reduced spacing */
+
+      // Grand Total
+      doc.setFontSize(tableFontSize + 4); // Larger font for Grand Total
+      doc.setTextColor(56, 142, 60);
+      doc.text("GRAND TOTAL", col1X, y);
+      doc.text(`$${currentTotalCost.toFixed(2)}`, col4X, y, { align: 'right' }); // Align with line total column
+      y += 15; /* Reduced spacing */
+
+      // Payment and Contact Information
+      doc.setFontSize(10);
+      doc.setTextColor(74, 74, 74);
+      doc.text("We're so excited to serve you. We request all our clients to pay a 50% deposit to", margin, y);
+      y += 4; /* Reduced spacing */
+      doc.text("kansal.nano@gmail.com upfront to confirm their order and the remainder of the payment the day of.", margin, y);
+      y += 8; /* Reduced spacing */
+      doc.text("Please note the 50% security deposit is non-refundable. Any changes to the order can be made", margin, y);
+      y += 4; /* Reduced spacing */
+      doc.text("for up to 5 days before the event excluding cancellation.", margin, y);
+      y += 10; /* Reduced spacing */
+      doc.text("Regards,", margin, y);
+      y += 4; /* Reduced spacing */
+      doc.text("Naina and Parth", margin, y);
+      y += 4; /* Reduced spacing */
+      doc.text("Tapri Chai Canada", margin, y);
+      
+      doc.save(`Catering_Order_Summary_${details.customerName.replace(/\s/g, '_')}.pdf`);
+    }
+
+    // Initial rendering of items when the page loads
+    document.addEventListener('DOMContentLoaded', (event) => {
+      renderItems('appetizerItems', appetizers);
+      renderItems('classicCurryItems', classicCurries); 
+      renderItems('signatureMainItems', signatureMains);
+      renderItems('breadItems', breads);
+      renderItems('riceItems', riceItems);
+      renderItems('raitaItems', raitaItems);
+      renderItems('papadItems', papadItems);
+      renderItems('dessertItems', dessertItems);
+
+      // Pre-select one item from each required category
+      const requiredCategories = ['appetizerItems', 'classicCurryItems', 'signatureMainItems', 'breadItems']; 
+      requiredCategories.forEach(categoryId => {
+          const checkbox = document.querySelector(`#${categoryId} input[type="checkbox"]`);
+          if (checkbox) {
+              checkbox.checked = true;
+              toggleQuantity(checkbox); // This will enable the input and set quantity
+          }
+      });
+
+      calculateTotal(); // Perform initial calculation to show price and check minimums
+    });
+  </script>
+</body>
+</html>
