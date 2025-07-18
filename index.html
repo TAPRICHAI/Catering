@@ -549,9 +549,6 @@
 
       <label for="modalOccasion">Occasion:</label>
       <input type="text" id="modalOccasion" required>
-      <button onclick="generateThemeIdeas()" style="margin-top: 10px;">✨ Generate Theme Ideas</button>
-      <textarea id="themeIdeasOutput" rows="4" placeholder="Generated theme ideas will appear here..." style="width: calc(100% - 22px); padding: 10px; margin-top: 10px; border: 1px solid var(--border-color); border-radius: 6px; font-size: 1em; box-sizing: border-box;" readonly></textarea>
-      
       <label for="modalEventDate">Event Date:</label>
       <input type="date" id="modalEventDate" required>
 
@@ -799,7 +796,6 @@
     const deliveryWarning = document.getElementById('deliveryWarning');
     const deliveryAddressGroup = document.getElementById('deliveryAddressGroup');
     const modalDeliveryAddress = document.getElementById('modalDeliveryAddress');
-    const themeIdeasOutput = document.getElementById('themeIdeasOutput');
 
 
     function openEventDetailsModal() {
@@ -933,47 +929,7 @@
         alert("Please ensure you have downloaded the PDF invoice and then manually attach it to the WhatsApp chat to complete your inquiry.");
     }
 
-    async function generateThemeIdeas() {
-        const occasion = modalOccasion.value.trim();
-        const themeIdeasOutput = document.getElementById('themeIdeasOutput');
-        
-        if (!occasion) {
-            themeIdeasOutput.value = "Please enter an occasion to generate theme ideas.";
-            return;
-        }
-
-        themeIdeasOutput.value = "Generating ideas... Please wait.";
-
-        try {
-            const prompt = `Generate 3-5 creative and elegant theme ideas or a short descriptive blurb for a catering event for a "${occasion}". Focus on sophisticated and appealing concepts.`;
-            let chatHistory = [];
-            chatHistory.push({ role: "user", parts: [{ text: prompt }] });
-            const payload = { contents: chatHistory };
-            const apiKey = ""; // If you want to use models other than gemini-2.0-flash or imagen-3.0-generate-002, provide an API key here. Otherwise, leave this as-is.
-            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
-            
-            const response = await fetch(apiUrl, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(payload)
-            });
-            
-            const result = await response.json();
-            
-            if (result.candidates && result.candidates.length > 0 &&
-                result.candidates[0].content && result.candidates[0].content.parts &&
-                result.candidates[0].content.parts.length > 0) {
-                const text = result.candidates[0].content.parts[0].text;
-                themeIdeasOutput.value = text;
-            } else {
-                themeIdeasOutput.value = "Could not generate ideas. Please try again.";
-            }
-        } catch (error) {
-            console.error("Error generating theme ideas:", error);
-            themeIdeasOutput.value = "An error occurred while generating ideas. Please try again.";
-        }
-    }
-
+    // The 'generateThemeIdeas' function has been removed.
 
     async function generatePdfWithDetails(details) {
       // Recalculate total just before PDF generation to ensure data is fresh
