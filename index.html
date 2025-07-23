@@ -496,42 +496,42 @@
     </div>
 
     <div class="section">
-      <h3>Appetizers ($2.75 per person)</h3>
+      <h3>Appetizers</h3>
       <div class="item-grid" id="appetizerItems"></div>
     </div>
 
     <div class="section">
-      <h3>Classic Curries ($3.00 per person)</h3>
+      <h3>Classic Curries</h3>
       <div class="item-grid" id="classicCurryItems"></div>
     </div>
 
     <div class="section">
-      <h3>Signature Mains ($3.00 per person)</h3>
+      <h3>Signature Mains</h3>
       <div class="item-grid" id="signatureMainItems"></div>
     </div>
 
     <div class="section">
-      <h3>Breads ($2.50 per person)</h3>
+      <h3>Breads</h3>
       <div class="item-grid" id="breadItems"></div>
     </div>
 
     <div class="section">
-      <h3>Rice ($1.50 per person)</h3>
+      <h3>Rice</h3>
       <div class="item-grid" id="riceItems"></div>
     </div>
 
     <div class="section">
-      <h3>Raita ($0.50 per person)</h3>
+      <h3>Raita</h3>
       <div class="item-grid" id="raitaItems"></div>
     </div>
 
     <div class="section">
-      <h3>Papad ($0.24 per person)</h3>
+      <h3>Papad</h3>
       <div class="item-grid" id="papadItems"></div>
     </div>
 
     <div class="section">
-      <h3>Desserts ($2.50 per person)</h3>
+      <h3>Desserts</h3>
       <div class="item-grid" id="dessertItems"></div>
     </div>
 
@@ -1116,7 +1116,8 @@
       renderItems('papadItems', papadItems);
       renderItems('dessertItems', dessertItems);
 
-      // Pre-select one item from each required category
+      // Pre-select one item from each required category - COMMENTED OUT
+      /*
       const requiredCategories = ['appetizerItems', 'classicCurryItems', 'signatureMainItems', 'breadItems']; 
       requiredCategories.forEach(categoryId => {
           const checkbox = document.querySelector(`#${categoryId} input[type="checkbox"]`);
@@ -1125,6 +1126,7 @@
               toggleQuantity(checkbox); // This will enable the input and set quantity
           }
       });
+      */
 
       calculateTotal(); // Perform initial calculation to show price and check minimums
     });
