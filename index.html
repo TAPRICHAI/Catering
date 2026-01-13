@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4503086702039142"
-     crossorigin="anonymous"></script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Catering Order Form - Tapri Chai</title>
@@ -10,25 +8,24 @@
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-  <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 
   <style>
-    /* Tapri Chai Inspired Color Palette - Updated with Green and richer tones */
+    /* --- Tapri Chai Color Palette & CSS Variables --- */
     :root {
-      --primary-chai-gold: #C89F3C; /* Richer gold */
-      --secondary-chai-gold: #E0B85C; /* Brighter gold */
-      --tertiary-chai-cream: #F5E0B3; /* Warmer cream */
-      --tapri-green: #4CAF50; /* Standard, pleasing green */
-      --tapri-green-dark: #388E3C; /* Darker shade for hover */
-      --background-light: #FFF8E1; /* Very light, warm yellow/cream */
-      --text-dark: #333333; /* Softer dark grey */
-      --text-medium: #555555; /* Medium grey */
-      --border-color: #E6D3B4; /* Soft border color */
-      --error-red: #dc3545; /* Standard error red */
-      --accent-orange: #FF7043; /* New accent color for highlights */
+      --primary-chai-gold: #C89F3C; 
+      --secondary-chai-gold: #E0B85C; 
+      --tertiary-chai-cream: #F5E0B3; 
+      --tapri-green: #4CAF50; 
+      --tapri-green-dark: #388E3C; 
+      --background-light: #FFF8E1; 
+      --text-dark: #333333; 
+      --text-medium: #555555; 
+      --border-color: #E6D3B4; 
+      --error-red: #dc3545; 
+      --accent-orange: #FF7043; 
     }
 
-    /* General body and container styling */
+    /* --- General Styling --- */
     body {
       font-family: 'Roboto', sans-serif;
       padding: 40px 20px;
@@ -39,7 +36,6 @@
       min-height: 100vh;
       box-sizing: border-box;
       color: var(--text-dark);
-      /* Removed overflow-x: hidden; as marigolds are gone */
     }
 
     .container {
@@ -48,56 +44,54 @@
       background-color: #fff;
       padding: 30px;
       border-radius: 12px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15); /* Stronger shadow */
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
       box-sizing: border-box;
       border: 1px solid var(--border-color);
-      position: relative; /* For z-index to work correctly with flowers */
-      z-index: 10; /* Ensure content is above flowers */
+      position: relative;
+      z-index: 10;
     }
 
-    /* Logo styling */
+    /* --- Logo & Headings --- */
     .logo-container {
       text-align: center;
       margin-bottom: 20px;
     }
 
     .logo-container img {
-      max-width: 200px; /* Adjust as needed */
+      max-width: 200px;
       height: auto;
     }
 
-    /* Heading styles */
     h2 {
-      color: var(--tapri-green-dark); /* Darker green for prominence */
+      color: var(--tapri-green-dark);
       font-size: 2.5em;
       margin-bottom: 30px;
       text-align: center;
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 1.5px;
-      text-shadow: 1px 1px 2px rgba(0,0,0,0.1); /* Subtle text shadow */
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
     }
 
     h3 {
-      color: var(--primary-chai-gold); /* Richer gold for subheadings */
+      color: var(--primary-chai-gold);
       font-size: 1.8em;
       margin-bottom: 20px;
-      border-bottom: 2px solid var(--secondary-chai-gold); /* Brighter gold underline */
+      border-bottom: 2px solid var(--secondary-chai-gold);
       padding-bottom: 8px;
       font-weight: 500;
     }
 
-    /* Section styling */
+    /* --- Sections & Inputs --- */
     .section {
       margin-bottom: 40px;
       padding: 25px;
-      background: linear-gradient(145deg, #fdfaf0, #fffcf5); /* Subtle gradient background */
-      border: 1px solid var(--secondary-chai-gold); /* Stronger border */
+      background: linear-gradient(145deg, #fdfaf0, #fffcf5);
+      border: 1px solid var(--secondary-chai-gold);
       border-radius: 10px;
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08); /* More pronounced shadow */
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
     }
 
-    /* Guest count input */
     #guestCount {
       padding: 10px 12px;
       border: 1px solid var(--border-color);
@@ -110,16 +104,15 @@
       color: var(--text-dark);
     }
 
-    /* Item grid layout */
+    /* --- Item Grids --- */
     .item-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
       gap: 20px;
     }
 
-    /* Individual item box styling */
     .item-box {
-      border: 1px solid var(--tertiary-chai-cream); /* Softer border initially */
+      border: 1px solid var(--tertiary-chai-cream);
       padding: 18px;
       border-radius: 10px;
       background: #ffffff;
@@ -131,14 +124,14 @@
     }
 
     .item-box:hover {
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15); /* Stronger hover shadow */
-      border-color: var(--primary-chai-gold); /* Gold border on hover */
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+      border-color: var(--primary-chai-gold);
       transform: translateY(-3px);
     }
 
     .item-box.selected {
-      background-color: #fff9e6; /* Lighter cream background when selected */
-      border-color: var(--tapri-green); /* Green border when selected */
+      background-color: #fff9e6;
+      border-color: var(--tapri-green);
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
     }
 
@@ -154,7 +147,7 @@
     .item-box input[type="checkbox"] {
       transform: scale(1.4);
       margin-right: 18px;
-      accent-color: var(--tapri-green-dark); /* Darker green accent */
+      accent-color: var(--tapri-green-dark);
       min-width: 20px;
       min-height: 20px;
     }
@@ -170,27 +163,27 @@
       color: var(--text-dark);
     }
 
-    /* Button styling */
+    /* --- Buttons --- */
     button {
-      background: linear-gradient(135deg, var(--tapri-green), var(--tapri-green-dark)); /* Gradient for buttons */
+      background: linear-gradient(135deg, var(--tapri-green), var(--tapri-green-dark));
       color: white;
       padding: 14px 30px;
-      border: 1px solid var(--tapri-green-dark); /* Solid border matching darker green */
+      border: 1px solid var(--tapri-green-dark);
       border-radius: 8px;
       cursor: pointer;
       font-size: 1.15em;
       margin-right: 20px;
       transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3); /* Stronger button shadow */
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
       font-weight: 600;
       letter-spacing: 0.5px;
       text-transform: uppercase;
     }
 
     button:hover {
-      background: linear-gradient(135deg, var(--tapri-green-dark), #2e6b30); /* Darker gradient on hover */
-      transform: translateY(-4px); /* More pronounced lift on hover */
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35); /* Even stronger shadow on hover */
+      background: linear-gradient(135deg, var(--tapri-green-dark), #2e6b30);
+      transform: translateY(-4px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
     }
 
     button:active {
@@ -198,21 +191,21 @@
       box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
     }
 
-    /* Result display styling */
+    /* --- Results --- */
     .result {
-      background: #fffdf5; /* Lighter, warmer background */
+      background: #fffdf5;
       padding: 30px;
       margin-top: 40px;
       border-radius: 10px;
-      border: 1px solid var(--secondary-chai-gold); /* Gold border */
+      border: 1px solid var(--secondary-chai-gold);
       font-size: 1.15em;
       line-height: 1.7;
-      box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.08); /* Subtle inner shadow */
+      box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.08);
       color: var(--text-medium);
     }
 
     .result strong {
-      color: var(--tapri-green-dark); /* Darker green for emphasis */
+      color: var(--tapri-green-dark);
       font-size: 1.3em;
       font-weight: 700;
     }
@@ -231,7 +224,7 @@
 
     .result ul li::before {
       content: '•';
-      color: var(--tapri-green); /* Green bullet points */
+      color: var(--tapri-green);
       position: absolute;
       left: 0;
       font-size: 1.4em;
@@ -239,7 +232,6 @@
       top: 3px;
     }
 
-    /* Error message styling */
     .error-message {
       color: var(--error-red);
       font-weight: 600;
@@ -251,19 +243,19 @@
       border-radius: 5px;
     }
 
-    /* Modal Styles */
+    /* --- Modal --- */
     .modal {
-      display: none; /* Hidden by default - THIS IS THE CRITICAL FIX */
-      position: fixed; /* Stay in place */
-      z-index: 1000; /* Sit on top */
+      display: none; 
+      position: fixed; 
+      z-index: 1000; 
       left: 0;
       top: 0;
-      width: 100%; /* Full width */
-      height: 100%; /* Full height */
-      overflow: auto; /* Enable scroll if needed */
-      background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-      align-items: center; /* Center vertically */
-      justify-content: center; /* Center horizontally */
+      width: 100%; 
+      height: 100%; 
+      overflow: auto; 
+      background-color: rgba(0,0,0,0.4); 
+      align-items: center; 
+      justify-content: center; 
     }
 
     .modal-content {
@@ -273,22 +265,21 @@
       width: 90%;
       max-width: 600px;
       border-radius: 10px;
-      box-shadow: 0 8px 25px rgba(0,0,0,0.4); /* Stronger modal shadow */
+      box-shadow: 0 8px 25px rgba(0,0,0,0.4);
       position: relative;
       display: flex;
       flex-direction: column;
       gap: 15px;
-      /* Added for scrolling on mobile */
-      max-height: 90vh; /* Limit height to 90% of viewport height */
-      overflow-y: auto; /* Enable vertical scrolling */
+      max-height: 90vh;
+      overflow-y: auto;
     }
 
     .modal-content h3 {
-      color: var(--tapri-green-dark); /* Darker green for modal heading */
+      color: var(--tapri-green-dark);
       text-align: center;
       margin-bottom: 25px;
       font-size: 2em;
-      border-bottom: 2px solid var(--primary-chai-gold); /* Gold underline for modal heading */
+      border-bottom: 2px solid var(--primary-chai-gold);
       padding-bottom: 10px;
     }
 
@@ -306,7 +297,7 @@
     .modal-content input[type="time"] {
       width: calc(100% - 22px);
       padding: 10px;
-      margin-bottom: 5px; /* Reduced margin */
+      margin-bottom: 5px;
       border: 1px solid var(--border-color);
       border-radius: 6px;
       font-size: 1em;
@@ -361,13 +352,13 @@
     }
 
     .modal-buttons .submit-button {
-      background: linear-gradient(135deg, var(--tapri-green), var(--tapri-green-dark)); /* Gradient for submit button */
+      background: linear-gradient(135deg, var(--tapri-green), var(--tapri-green-dark));
       color: white;
       border: none;
     }
 
     .modal-buttons .submit-button:hover {
-      background: linear-gradient(135deg, var(--tapri-green-dark), #2e6b30); /* Darker gradient on hover */
+      background: linear-gradient(135deg, var(--tapri-green-dark), #2e6b30);
     }
 
     .modal-buttons .cancel-button {
@@ -383,104 +374,47 @@
     .warning-message {
       color: var(--error-red);
       font-weight: 500;
-      margin-top: 5px; /* Adjust spacing */
-      margin-bottom: 15px; /* Adjust spacing */
+      margin-top: 5px;
+      margin-bottom: 15px;
       text-align: center;
       font-size: 0.95em;
     }
 
     #deliveryAddressGroup {
-      display: none; /* Hidden by default */
+      display: none;
     }
 
-    /* Mobile responsiveness adjustments */
+    /* --- Mobile Responsiveness --- */
     @media (max-width: 768px) {
-      body {
-        padding: 20px 10px;
-      }
-
-      .container {
-        padding: 20px;
-      }
-
-      h2 {
-        font-size: 2em;
-        margin-bottom: 20px;
-      }
-
-      h3 {
-        font-size: 1.5em;
-        margin-bottom: 15px;
-      }
-
-      #guestCount {
-        width: 100px;
-        font-size: 1em;
-        margin-left: 10px;
-      }
-
-      .item-grid {
-        grid-template-columns: 1fr; /* Stack items on small screens */
-        gap: 15px;
-      }
-
-      .item-box {
-        padding: 15px;
-      }
-
-      .item-box label {
-        font-size: 1em;
-      }
-
-      .item-box input[type="checkbox"] {
-        transform: scale(1.2);
-        margin-right: 12px;
-      }
-
-      .item-box input[type="number"] {
-        width: 60px;
-        padding: 8px;
-        font-size: 1em;
-      }
-
-      button {
-        padding: 12px 20px;
-        font-size: 1em;
-        margin-right: 10px;
-        margin-bottom: 10px; /* Add space between stacked buttons */
-        width: calc(50% - 5px); /* Two buttons per row */
-        box-sizing: border-box;
+      body { padding: 20px 10px; }
+      .container { padding: 20px; }
+      h2 { font-size: 2em; margin-bottom: 20px; }
+      h3 { font-size: 1.5em; margin-bottom: 15px; }
+      #guestCount { width: 100px; font-size: 1em; margin-left: 10px; }
+      .item-grid { grid-template-columns: 1fr; gap: 15px; }
+      .item-box { padding: 15px; }
+      .item-box label { font-size: 1em; }
+      .item-box input[type="checkbox"] { transform: scale(1.2); margin-right: 12px; }
+      .item-box input[type="number"] { width: 60px; padding: 8px; font-size: 1em; }
+      
+      button { 
+        padding: 12px 20px; 
+        font-size: 1em; 
+        margin-right: 10px; 
+        margin-bottom: 10px; 
+        width: calc(50% - 5px); 
+        box-sizing: border-box; 
       }
       
-      .modal-content {
-        padding: 20px;
-        width: 95%;
-        /* These properties are already there from the general modal-content rules, but keeping them here for clarity if specific mobile adjustments are needed later. */
-        max-height: 90vh; /* Ensure it's active on mobile */
-        overflow-y: auto; /* Ensure scrolling on mobile */
-      }
-
-      .modal-buttons {
-        flex-direction: column; /* Stack modal buttons */
-        gap: 10px;
-      }
-
-      .modal-buttons button {
-        width: 100%;
-        margin-right: 0;
-      }
+      .modal-content { padding: 20px; width: 95%; max-height: 90vh; overflow-y: auto; }
+      .modal-buttons { flex-direction: column; gap: 10px; }
+      .modal-buttons button { width: 100%; margin-right: 0; }
     }
 
     @media (max-width: 480px) {
-      h2 {
-        font-size: 1.8em;
-      }
-      h3 {
-        font-size: 1.3em;
-      }
-      button {
-        width: 100%; /* Single button per row */
-      }
+      h2 { font-size: 1.8em; }
+      h3 { font-size: 1.3em; }
+      button { width: 100%; }
     }
   </style>
 </head>
@@ -494,7 +428,7 @@
     <div class="section">
       <label>Total Number of Guests (Minimum 15):</label>
       <input type="number" id="guestCount" min="15" value="15" onchange="enforceMinGuests(this)">
-      <p>Base price: $15.99 per person (includes: 1 Appetizer, 2 Curries (1 Classic, 1 Signature), Rice, Raita, Papad, Desert)</p>
+      <p><strong>Base Package ($15.99/person):</strong> Includes 1 Appetizer, 2 Curries (1 Classic, 1 Signature), Rice, Raita, Papad, Dessert.<br><em>Adding extra items will increase the per-person cost.</em></p>
     </div>
 
     <div class="section">
@@ -586,69 +520,30 @@
   </div>
 
   <script>
-    const appetizers = [
-      "Veg Burger Sliders",
-      "Vada Pav Sliders",
-      "Dabeli",
-      "Veg Sandwich",
-      "Dahi Bhalla Papdi",
-      "Samosa",
-      "Pani Puri"
-    ];
-
-    const classicCurries = [
-      "Dal Makhni",
-      "Dal Tadka",
-      "Rajma Masala",
-      "Kadhi Pakora",
-      "Chana Masala"
-    ];
-
-    const signatureMains = [
-      "Paneer Lababdar",
-      "Aloo Gobhi",
-      "Aloo Gravy",
-      "Shahi Paneer",
-      "Malai Kofta"
-    ];
-
+    // --- Data Definitions ---
+    const appetizers = ["Veg Burger Sliders", "Vada Pav Sliders", "Dabeli", "Veg Sandwich", "Dahi Bhalla Papdi", "Samosa", "Pani Puri"];
+    const classicCurries = ["Dal Makhni", "Dal Tadka", "Rajma Masala", "Kadhi Pakora", "Chana Masala"];
+    const signatureMains = ["Paneer Lababdar", "Aloo Gobhi", "Aloo Gravy", "Shahi Paneer", "Malai Kofta"];
     const breads = ["Puris (2)", "Tawa Roti (2)"];
+    const riceItems = ["Jeera Rice", "Plain Rice"];
+    const raitaItems = ["Boondi Raita", "Veg Raita", "Salted Yogurt"];
+    const papadItems = ["Fried Papad"];
+    const dessertItems = ["Gulab Jamun (2)", "Ras Malai (2)"];
 
-    const riceItems = [
-      "Jeera Rice",
-      "Plain Rice"
-    ];
+    let selectedItems = []; 
+    let currentTotalCost = 0; 
 
-    const raitaItems = [
-      "Boondi Raita",
-      "Veg Raita",
-      "Salted Yogurt"
-    ];
-
-    const papadItems = [
-      "Fried Papad"
-    ];
-
-    const dessertItems = [
-      "Gulab Jamun (2)",
-      "Ras Malai (2)"
-    ];
-
-    let selectedItems = []; // Stores objects with name, type, quantity, unitPrice, lineTotal
-    let currentTotalCost = 0; // To store the total for delivery check
-
-    // --- Image URLs for PDF and HTML ---
+    // --- Image URLs ---
     const bannerImgUrl = 'https://i.ibb.co/L5Qy0f7/tapr-cover.png'; 
-    const logoImgUrl = 'https://i.ibb.co/k2kLHBq2/TAPRI-CHAI-02-1.png'; // Use the same logo URL as in the HTML <img> tag
-    // --- End Image URLs ---
+    const logoImgUrl = 'https://i.ibb.co/k2kLHBq2/TAPRI-CHAI-02-1.png';
 
+    // --- Rendering Functions ---
     function renderItems(containerId, items) {
       const container = document.getElementById(containerId);
       if (!container) {
-        console.error(`Error: HTML element with ID "${containerId}" not found. Cannot render items.`);
+        console.error(`Error: HTML element with ID "${containerId}" not found.`);
         return;
       }
-      console.log(`Rendering ${containerId} with items:`, items); // Added console log
       container.innerHTML = '';
       items.forEach(item => {
         const div = document.createElement('div');
@@ -678,7 +573,7 @@
       } else {
         quantityInput.value = 0;
       }
-      calculateTotal(); // Recalculate total after quantity change
+      calculateTotal();
     }
 
     function enforceMinItemQuantity(input) {
@@ -688,10 +583,10 @@
       if (isNaN(currentQty) || currentQty < guestCount) {
         input.value = guestCount;
       }
-      calculateTotal(); // Recalculate total after quantity change
+      calculateTotal();
     }
 
-    // Helper to process categories and add items to selectedItems array
+    // --- Logic & Calculation ---
     function processCategoryForCalculation(containerId, perPersonCost, type) {
         const inputs = document.querySelectorAll(`#${containerId} input[type='number']`);
         let selectedCount = 0;
@@ -713,9 +608,8 @@
             }
         });
 
-        return { count: selectedCount }; // Only return count for validation
+        return { count: selectedCount };
     }
-
 
     function enforceMinGuests(input) {
       let value = parseInt(input.value);
@@ -731,14 +625,14 @@
               quantityInput.value = value;
           }
       });
-      calculateTotal(); // Recalculate total after guest count change
+      calculateTotal();
     }
 
     function calculateTotal() {
       const guests = parseInt(document.getElementById('guestCount').value);
-      selectedItems = []; // Reset selected items for each calculation
+      selectedItems = []; 
 
-      // Process each category, adding selected items to `selectedItems` with their respective costs
+      // Validations and Processing
       const appetizersResult = processCategoryForCalculation('appetizerItems', 2.75, 'Appetizer');
       if (appetizersResult.count < 1) {
           document.getElementById('result').innerHTML = `<p class="error-message">Please select at least 1 Appetizer.</p>`;
@@ -769,11 +663,9 @@
 
       processCategoryForCalculation('riceItems', 1.50, 'Rice');
       processCategoryForCalculation('raitaItems', 0.50, 'Raita');
-      // Updated Papad calculation to use $0.24 per person
       processCategoryForCalculation('papadItems', 0.24, 'Papad'); 
       processCategoryForCalculation('dessertItems', 2.50, 'Dessert');
 
-      // Calculate the total from all selected items' line totals
       currentTotalCost = selectedItems.reduce((sum, item) => sum + item.lineTotal, 0);
       
       let itemizedList = "";
@@ -789,11 +681,12 @@
       `;
     }
 
-    // Modal elements
+    // --- Modal Logic ---
     const eventDetailsModal = document.getElementById('eventDetailsModal');
     const modalSubmitBtn = document.getElementById('modalSubmit');
     const modalCancelBtn = document.getElementById('modalCancel');
 
+    // Inputs
     const modalCustomerName = document.getElementById('modalCustomerName');
     const modalCustomerPhone = document.getElementById('modalCustomerPhone');
     const modalCustomerEmail = document.getElementById('modalCustomerEmail');
@@ -806,40 +699,36 @@
     const deliveryAddressGroup = document.getElementById('deliveryAddressGroup');
     const modalDeliveryAddress = document.getElementById('modalDeliveryAddress');
 
-
     function openEventDetailsModal() {
-      // First, ensure the menu selections are valid
       calculateTotal();
       const resultDiv = document.getElementById('result');
       if (resultDiv.querySelector('.error-message')) {
         alert("Please ensure you meet the minimum item selection requirements before downloading the PDF.");
-        return; // Stop if validation failed
+        return; 
       }
       
-      // Check for delivery eligibility
       if (currentTotalCost < 300) {
         deliveryOptionDelivery.disabled = true;
-        deliveryOptionDelivery.checked = false; // Uncheck delivery if total is less than $300
-        deliveryOptionPickup.checked = true; // Force pickup
+        deliveryOptionDelivery.checked = false;
+        deliveryOptionPickup.checked = true;
         deliveryWarning.style.display = 'block';
-        deliveryAddressGroup.style.display = 'none'; // Hide address if pickup is forced
+        deliveryAddressGroup.style.display = 'none';
         modalDeliveryAddress.removeAttribute('required');
       } else {
         deliveryOptionDelivery.disabled = false;
         deliveryWarning.style.display = 'none';
-        deliveryOptionDelivery.checked = true; // Default to delivery if eligible
-        deliveryAddressGroup.style.display = 'block'; // Show address by default for delivery
+        deliveryOptionDelivery.checked = true;
+        deliveryAddressGroup.style.display = 'block';
         modalDeliveryAddress.setAttribute('required', 'required');
       }
 
-      eventDetailsModal.style.display = 'flex'; // Show the modal
+      eventDetailsModal.style.display = 'flex'; 
     }
 
     modalCancelBtn.onclick = function() {
-      eventDetailsModal.style.display = 'none'; // Hide the modal
+      eventDetailsModal.style.display = 'none'; 
     }
 
-    // Toggle delivery address visibility
     deliveryOptionDelivery.addEventListener('change', function() {
       if (this.checked) {
         deliveryAddressGroup.style.display = 'block';
@@ -854,9 +743,7 @@
       }
     });
 
-
     modalSubmitBtn.onclick = function() {
-      // Collect data from modal inputs
       const customerName = modalCustomerName.value;
       const customerPhone = modalCustomerPhone.value;
       const customerEmail = modalCustomerEmail.value;
@@ -866,7 +753,6 @@
       const deliveryOption = document.querySelector('input[name="deliveryOption"]:checked').value;
       const deliveryAddress = deliveryOption === 'Delivery' ? modalDeliveryAddress.value : '';
 
-      // Basic validation for modal inputs
       if (!customerName || !customerPhone || !customerEmail || !occasion || !eventDate || !eventTime) {
         alert("Please fill in all required event details.");
         return;
@@ -876,7 +762,6 @@
         return;
       }
 
-      // If all inputs are valid, proceed to generate PDF
       generatePdfWithDetails({
         customerName,
         customerPhone,
@@ -888,15 +773,13 @@
         deliveryAddress
       });
 
-      eventDetailsModal.style.display = 'none'; // Hide modal after submission
+      eventDetailsModal.style.display = 'none'; 
     }
 
-    // Function to handle WhatsApp sharing
+    // --- WhatsApp Functionality ---
     function whatsappPdfSummary() {
-        // Ensure latest calculation
         calculateTotal();
 
-        // Collect necessary details for the WhatsApp message
         const customerName = modalCustomerName.value || "Customer";
         const guests = parseInt(document.getElementById('guestCount').value) || 0;
         const totalCost = currentTotalCost.toFixed(2);
@@ -922,24 +805,15 @@
         }
 
         message += `\nPlease find the detailed PDF invoice attached (if you have already downloaded it).`;
-
-        // Encode the message for URL
         const encodedMessage = encodeURIComponent(message);
-
-        // WhatsApp number (replace with Tapri Chai's actual WhatsApp number)
         const whatsappNumber = "16132901291"; 
-
         const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
-
-        // Open WhatsApp
         window.open(whatsappUrl, '_blank');
-
-        // Alert user to manually attach the PDF
         alert("Please ensure you have downloaded the PDF invoice and then manually attach it to the WhatsApp chat to complete your inquiry.");
     }
 
+    // --- PDF Generation Logic ---
     async function generatePdfWithDetails(details) {
-      // Recalculate total just before PDF generation to ensure data is fresh
       calculateTotal(); 
 
       const { jsPDF } = window.jspdf;
@@ -950,110 +824,104 @@
       const margin = 15;
       const pageWidth = doc.internal.pageSize.width;
       
-      // Column positions for the table
-      const col1X = margin; // Item Name
-      const col2X = col1X + 80; // Quantity
-      const col3X = col2X + 35; // Unit Price
-      const col4X = col3X + 35; // Line Total (right aligned to here)
+      const col1X = margin; 
+      const col2X = col1X + 80; 
+      const col3X = col2X + 35; 
+      const col4X = col3X + 35; 
 
-
-      // --- Add the banner image at the top ---
+      // Banner
       if (bannerImgUrl) {
         try {
             const img = new Image();
             img.src = bannerImgUrl;
-            await new Promise(resolve => img.onload = resolve); // Wait for image to load
-            doc.addImage(img, 'PNG', 0, 0, pageWidth, 40); // Adjust height (40) as needed
-            y = 50; // Adjust starting y position after banner
+            await new Promise(resolve => img.onload = resolve);
+            doc.addImage(img, 'PNG', 0, 0, pageWidth, 40); 
+            y = 50; 
         } catch (e) {
             console.error("Error loading banner image for PDF:", e);
         }
       }
-      // --- End banner image ---
 
-      // --- Add the logo image ---
+      // Logo
       if (logoImgUrl) {
         try {
             const img = new Image();
             img.src = logoImgUrl;
-            await new Promise(resolve => img.onload = resolve); // Wait for image to load
-            const logoWidth = 50; // Adjust logo width as needed
-            const logoHeight = img.height * (logoWidth / img.width); // Maintain aspect ratio
-            const logoX = (pageWidth - logoWidth) / 2; // Center the logo
+            await new Promise(resolve => img.onload = resolve);
+            const logoWidth = 50; 
+            const logoHeight = img.height * (logoWidth / img.width); 
+            const logoX = (pageWidth - logoWidth) / 2; 
             doc.addImage(img, 'PNG', logoX, y, logoWidth, logoHeight);
-            y += logoHeight + 10; // Move y down after the logo
+            y += logoHeight + 10; 
         } catch (e) {
             console.error("Error loading logo image for PDF:", e);
         }
       }
-      // --- End logo image ---
 
-      // Invoice Title
+      // Header
       doc.setFontSize(22);
-      doc.setTextColor(56, 142, 60); // Tapri Green RGB
+      doc.setTextColor(56, 142, 60); 
       doc.text("Catering Order Invoice", margin, y);
-      y += 10; /* Reduced spacing */
+      y += 10; 
 
-      // Customer and Event Details
+      // Customer Info - Updated with Text Wrapping Logic
       doc.setFontSize(12);
       doc.setTextColor(74, 74, 74);
-      doc.text(`Customer: ${details.customerName}`, margin, y);
-      y += 6; /* Reduced spacing */
-      doc.text(`Phone: ${details.customerPhone}`, margin, y);
-      y += 6; /* Reduced spacing */
-      doc.text(`Email: ${details.customerEmail}`, margin, y);
-      y += 6; /* Reduced spacing */
-      doc.text(`Occasion: ${details.occasion}`, margin, y);
-      y += 6; /* Reduced spacing */
-      doc.text(`Event Date: ${details.eventDate}`, margin, y);
-      y += 6; /* Reduced spacing */
-      doc.text(`Event Time: ${details.eventTime}`, margin, y);
-      y += 6; /* Reduced spacing */
-      doc.text(`Total Guests: ${guests}`, margin, y);
-      y += 6; /* Reduced spacing */
-      doc.text(`Delivery Option: ${details.deliveryOption}`, margin, y);
-      y += 6; /* Reduced spacing */
-      if (details.deliveryOption === 'Delivery' && details.deliveryAddress) {
-        doc.text(`Delivery Address: ${details.deliveryAddress}`, margin, y);
-        y += 6; /* Reduced spacing */
-      }
-      y += 10; /* Reduced spacing */
+      doc.text(`Customer: ${details.customerName}`, margin, y); y += 6;
+      doc.text(`Phone: ${details.customerPhone}`, margin, y); y += 6;
+      doc.text(`Email: ${details.customerEmail}`, margin, y); y += 6;
 
-      // Calculate available height for the table
-      const headerHeight = y; // Current y is the end of header
-      const footerHeightEstimate = 60; // Estimate for total, payment info
+      // Wrap Occasion Text
+      const occasionText = `Occasion: ${details.occasion}`;
+      const splitOccasion = doc.splitTextToSize(occasionText, pageWidth - (margin * 2));
+      doc.text(splitOccasion, margin, y);
+      y += (splitOccasion.length * 6);
+
+      doc.text(`Event Date: ${details.eventDate}`, margin, y); y += 6;
+      doc.text(`Event Time: ${details.eventTime}`, margin, y); y += 6;
+      doc.text(`Total Guests: ${guests}`, margin, y); y += 6;
+      doc.text(`Delivery Option: ${details.deliveryOption}`, margin, y); y += 6;
+
+      // Wrap Address Text
+      if (details.deliveryOption === 'Delivery' && details.deliveryAddress) {
+        const addressText = `Delivery Address: ${details.deliveryAddress}`;
+        const splitAddress = doc.splitTextToSize(addressText, pageWidth - (margin * 2));
+        doc.text(splitAddress, margin, y);
+        y += (splitAddress.length * 6);
+      }
+      y += 10; 
+
+      // Table Setup
+      const headerHeight = y;
+      const footerHeightEstimate = 60;
       const availableTableHeight = doc.internal.pageSize.height - headerHeight - margin - footerHeightEstimate;
 
-      let tableFontSize = 10; // Initial font size for table content
-      let lineHeight = tableFontSize / doc.internal.scaleFactor * 1.2; // 1.2 for line spacing
+      let tableFontSize = 10;
+      let lineHeight = tableFontSize / doc.internal.scaleFactor * 1.2;
       let requiredTableHeight = selectedItems.length * lineHeight;
 
-      // Adjust font size if table overflows
       if (requiredTableHeight > availableTableHeight) {
-          tableFontSize = Math.max(7, (availableTableHeight / selectedItems.length) / (1.2 / doc.internal.scaleFactor)); // Minimum 7pt
-          lineHeight = tableFontSize / doc.internal.scaleFactor * 1.2; // Recalculate line height
+          tableFontSize = Math.max(7, (availableTableHeight / selectedItems.length) / (1.2 / doc.internal.scaleFactor));
+          lineHeight = tableFontSize / doc.internal.scaleFactor * 1.2;
       }
 
-      // Itemized Table Headers
-      doc.setFontSize(tableFontSize + 2); // Slightly larger for headers
+      // Table Headers
+      doc.setFontSize(tableFontSize + 2);
       doc.setTextColor(56, 142, 60);
       doc.text("Menu Item", col1X, y);
       doc.text("Qty", col2X, y, { align: 'right' }); 
       doc.text("Unit Price", col3X, y, { align: 'right' }); 
       doc.text("Line Total", col4X, y, { align: 'right' }); 
-      y += tableFontSize + 3; /* Reduced spacing */
-      doc.line(col1X, y, pageWidth - margin, y); // Underline headers
-      y += 5; /* Reduced spacing */
+      y += tableFontSize + 3; 
+      doc.line(col1X, y, pageWidth - margin, y); 
+      y += 5; 
 
-      // Itemized Table Content
+      // Table Rows
       doc.setFontSize(tableFontSize);
       doc.setTextColor(74, 74, 74);
 
       selectedItems.forEach(item => {
-          // Ensure enough space for the current row
           if (y + lineHeight > doc.internal.pageSize.height - margin - footerHeightEstimate) {
-              // This scenario should ideally not happen with dynamic font sizing for the whole table,
-              // but it's a safeguard for very complex cases or if the minimum font is too large.
               doc.addPage();
               y = margin;
               doc.setFontSize(tableFontSize + 2);
@@ -1062,9 +930,9 @@
               doc.text("Qty", col2X, y, { align: 'right' }); 
               doc.text("Unit Price", col3X, y, { align: 'right' }); 
               doc.text("Line Total", col4X, y, { align: 'right' }); 
-              y += tableFontSize + 3; /* Reduced spacing */
+              y += tableFontSize + 3; 
               doc.line(col1X, y, pageWidth - margin, y);
-              y += 5; /* Reduced spacing */
+              y += 5; 
               doc.setFontSize(tableFontSize);
               doc.setTextColor(74, 74, 74);
           }
@@ -1076,38 +944,38 @@
           y += lineHeight;
       });
 
-      y += 8; /* Reduced spacing */
-      doc.line(col1X, y, pageWidth - margin, y); // Line before Grand Total
-      y += 5; /* Reduced spacing */
+      y += 8; 
+      doc.line(col1X, y, pageWidth - margin, y); 
+      y += 5; 
 
       // Grand Total
-      doc.setFontSize(tableFontSize + 4); // Larger font for Grand Total
+      doc.setFontSize(tableFontSize + 4);
       doc.setTextColor(56, 142, 60);
       doc.text("GRAND TOTAL", col1X, y);
-      doc.text(`$${currentTotalCost.toFixed(2)}`, col4X, y, { align: 'right' }); // Align with line total column
-      y += 15; /* Reduced spacing */
+      doc.text(`$${currentTotalCost.toFixed(2)}`, col4X, y, { align: 'right' });
+      y += 15; 
 
-      // Payment and Contact Information
+      // Footer
       doc.setFontSize(10);
       doc.setTextColor(74, 74, 74);
       doc.text("We're so excited to serve you. We request all our clients to pay a 50% deposit to", margin, y);
-      y += 4; /* Reduced spacing */
+      y += 4; 
       doc.text("kansal.nano@gmail.com upfront to confirm their order and the remainder of the payment the day of.", margin, y);
-      y += 8; /* Reduced spacing */
+      y += 8; 
       doc.text("Please note the 50% security deposit is non-refundable. Any changes to the order can be made", margin, y);
-      y += 4; /* Reduced spacing */
+      y += 4; 
       doc.text("for up to 5 days before the event excluding cancellation.", margin, y);
-      y += 10; /* Reduced spacing */
+      y += 10; 
       doc.text("Regards,", margin, y);
-      y += 4; /* Reduced spacing */
+      y += 4; 
       doc.text("Naina and Parth", margin, y);
-      y += 4; /* Reduced spacing */
+      y += 4; 
       doc.text("Tapri Chai Canada", margin, y);
       
       doc.save(`Catering_Order_Summary_${details.customerName.replace(/\s/g, '_')}.pdf`);
     }
 
-    // Initial rendering of items when the page loads
+    // --- Initialization ---
     document.addEventListener('DOMContentLoaded', (event) => {
       renderItems('appetizerItems', appetizers);
       renderItems('classicCurryItems', classicCurries); 
@@ -1118,19 +986,7 @@
       renderItems('papadItems', papadItems);
       renderItems('dessertItems', dessertItems);
 
-      // Pre-select one item from each required category - COMMENTED OUT
-      /*
-      const requiredCategories = ['appetizerItems', 'classicCurryItems', 'signatureMainItems', 'breadItems']; 
-      requiredCategories.forEach(categoryId => {
-          const checkbox = document.querySelector(`#${categoryId} input[type="checkbox"]`);
-          if (checkbox) {
-              checkbox.checked = true;
-              toggleQuantity(checkbox); // This will enable the input and set quantity
-          }
-      });
-      */
-
-      calculateTotal(); // Perform initial calculation to show price and check minimums
+      calculateTotal(); 
     });
   </script>
 </body>
